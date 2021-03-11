@@ -15,9 +15,7 @@ function renderVaccineData({ hour, vaccine: { historical } }) {
 
   const diff = todayRate - yesterdayRate;
 
-  return `💉 ${historical[historical.length - 1].total} (${format(diff)}% ${
-    diff >= 0 ? "⬆" : "⬇"
-  })
+  return `💉 ${todayTotal} (${format(diff)}% ${diff >= 0 ? "⬆" : "⬇"})
     ---
     Vaccinated population: ${format(todayRate)}%
     D-1 vacc. population: ${format(yesterdayRate)}%
