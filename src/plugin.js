@@ -17,15 +17,15 @@ function renderVaccineData({ hour, vaccine: { historical } }) {
   const yesterdayRate = grandTotalWithoutToday / POPULATION_TARGET;
   const todayRate = grandTotal / POPULATION_TARGET;
 
-  const yesterdayP100 = (
-    (grandTotalWithoutToday / URUGUAY_POPULATION) *
-    100
-  ).toFixed(1);
-  const todayP100 = ((grandTotal / URUGUAY_POPULATION) * 100).toFixed(1);
+  const yesterdayP100 = formatP(grandTotalWithoutToday / URUGUAY_POPULATION);
+  const todayP100 = formatP(grandTotal / URUGUAY_POPULATION);
 
   const diff = todayRate - yesterdayRate;
 
-  const showTodayOrTotal = new Date().getUTCMinutes() % 2 === 0;
+  // During the night the "vaccinated today" count is zero
+  // so we show the total. Then we show the total every other minute.
+  const showTodayOrTotal =
+    todayTotal === 0 ? false : new Date().getUTCMinutes() % 2 === 0;
 
   const today = `${t("today")} ${formatN(todayTotal)} (${formatP(diff)}%)`;
   const total = `Total: ${formatN(grandTotal)} (${formatP(todayRate)}%)`;
@@ -36,7 +36,7 @@ function renderVaccineData({ hour, vaccine: { historical } }) {
     ---
     ✦ ${t("progress_single_dose")} ${formatP(todayRate)}%
     ✦ ${t("vaccines_applied")} ${formatN(grandTotal)}
-    ✦ P100: ${formatN(todayP100)} (from ${formatN(yesterdayP100)})
+    ✦ P100: ${todayP100} (from ${yesterdayP100})
     ---
     ${t("latest_update")} ${hour}`;
 }
