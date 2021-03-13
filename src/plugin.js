@@ -36,7 +36,7 @@ function renderVaccineData({ hour, vaccine: { historical } }) {
     ---
     ✦ ${t("progress_single_dose")} ${formatP(todayRate)}%
     ✦ ${t("vaccines_applied")} ${formatN(grandTotal)}
-    ✦ P100: ${todayP100} (from ${yesterdayP100})
+    ✦ P100: ${todayP100} (vs. ${yesterdayP100})
     ---
     ${t("latest_update")} ${hour}`;
 }
