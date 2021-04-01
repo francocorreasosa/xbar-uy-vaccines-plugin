@@ -11,11 +11,11 @@ const { formatP, formatN } = require("./utils");
 
 function renderVaccineData({ hour, vaccine: { historical } }) {
   const grandTotal = historical.reduce((prev, curr) => prev + curr.total, 0);
-  const todayTotal = historical[historical.length - 1].total;
+  const todayTotal = historical[0].total;
   const grandTotalWithoutToday = grandTotal - todayTotal;
 
-  const yesterdayRate = grandTotalWithoutToday / POPULATION_TARGET;
-  const todayRate = grandTotal / POPULATION_TARGET;
+  const yesterdayRate = grandTotalWithoutToday / (POPULATION_TARGET * 2);
+  const todayRate = grandTotal / (POPULATION_TARGET * 2);
 
   const yesterdayP100 = formatP(grandTotalWithoutToday / URUGUAY_POPULATION);
   const todayP100 = formatP(grandTotal / URUGUAY_POPULATION);
@@ -34,7 +34,7 @@ function renderVaccineData({ hour, vaccine: { historical } }) {
     ---
     💉 ${showTodayOrTotal ? total : today}
     ---
-    ✦ ${t("progress_single_dose")} ${formatP(todayRate)}%
+    ✦ ${t("progress_both_doses")} ${formatP(todayRate)}%
     ✦ ${t("vaccines_applied")} ${formatN(grandTotal)}
     ✦ P100: ${todayP100} (vs. ${yesterdayP100})
     ---
